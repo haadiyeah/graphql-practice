@@ -43,6 +43,34 @@ const resolvers = {
         author(parent) {
             return db.authors.find(author => author.id === parent.author_id);
         }
+    },
+    Mutation: {
+        deleteGame(_, args) {
+            db.games = db.games.filter(game => game.id !== args.id);
+            return db.games;
+        },
+        addGame(_, args) {
+            let game= {
+                ...args.game,
+                id: Math.floor(Math.random() * 1000).toString()
+            }
+            db.games.push(game);
+            return game;
+        },
+        //mutation
+        updateGame(_, args) {
+            let game = db.games.find(game => game.id === args.id);
+            if (args.game.title) {
+                game.title = args.game.title;
+            }
+            if (args.game.platform) {
+                game.platform = args.game.platform;
+            }
+
+            //update db.games array
+            db.games = db.games.map(g => g.id === game.id ? game : g);
+            return game;
+        }
     }
 }
 

@@ -1,0 +1,1 @@
+Type `npx nodemon index.js` to run Apollo server.
